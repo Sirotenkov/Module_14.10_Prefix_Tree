@@ -1,0 +1,2 @@
+C:\Users\Aleksey\Desktop\PrefixTree\x64\Debug\PrefixTree.exe
+C:\Users\Aleksey\Desktop\Module_14.10_Prefix_Tree\x64\Debug\PrefixTree.exe
