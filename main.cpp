@@ -45,21 +45,21 @@ int main() {
 	auto input = 0;                         // текущий введённый символ
 
 	while ((input = _getch()) != KEY_ESC) { // считать символ пока не esc
-		if (input == KEY_TAB) {             // если tab то пытаемся завершить слово
+		if (input == KEY_TAB) {             // если TAB, то пытаемся завершить слово
 			string const completeWord = tree.autoComplete(word); // ищем слово в словаре, имея только начальную часть слова
 			if (!completeWord.empty()) {    // если нашли
-				word = completeWord;        // то текущим словом становится дополненное
+				word = completeWord;        // то текущим словом становится дополненное слово
 				cout << "\33[2K";
 				cout << "\r" << word;
 			}
 		}
-		else if (input == KEY_ENTER) {     // если enter, переходим к вводу нового слова
-			tree.insert(word);             // сохраняем введённое слово в словаре
+		else if (input == KEY_ENTER) {     // если ENTER, переходим к вводу нового слова
+			tree.insert(word);             // сохраняем введённое словов словаре
 			word.clear();
 			cout << endl;
 		}
 		else {                            // введён любой другой символ
-			if (input == KEY_BACK) {      // если backspace, то стираем один символ
+			if (input == KEY_BACK) {      // если BACKSPACE, стираем один символ
 				if (!word.empty()) {
 					word.resize(word.size() - 1);
 				}
