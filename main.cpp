@@ -3,13 +3,13 @@
 #include "preftree.h"
 using namespace std;
 
-// коды клавиш управления, которые возвращает getch
+// РєРѕРґС‹ РєР»Р°РІРёС€ СѓРїСЂР°РІР»РµРЅРёСЏ, РєРѕС‚РѕСЂС‹Рµ РІРѕР·РІСЂР°С‰Р°РµС‚ getch
 #define KEY_BACK 8
 #define KEY_TAB 9
 #define KEY_ENTER 13
 #define KEY_ESC 27
 
-void printTree(Node const* node, string word = "") {  // отладочная (вспомогательная) функция отображения дерева
+void printTree(Node const* node, string word = "") {  // РѕС‚Р»Р°РґРѕС‡РЅР°СЏ (РІСЃРїРѕРјРѕРіР°С‚РµР»СЊРЅР°СЏ) С„СѓРЅРєС†РёСЏ РѕС‚РѕР±СЂР°Р¶РµРЅРёСЏ РґРµСЂРµРІР°
 	auto childCount = 0;
 
 	for (auto i = 0; i < Node::LETTERS; ++i) {
@@ -32,7 +32,7 @@ void printTree(PrefTree* tree) {
 }
 
 int main() {
-	PrefTree tree;                          // объект дерева префиксов
+	PrefTree tree;                          // РѕР±СЉРµРєС‚ РґРµСЂРµРІР° РїСЂРµС„РёРєСЃРѕРІ
 
 	tree.insert("bubble");
 	tree.insert("cat");
@@ -41,34 +41,34 @@ int main() {
 	tree.insert("cMaKe");
 	//printTree(&tree);
 
-	string word;                            // строка с текущим словом
-	auto input = 0;                         // текущий введённый символ
+	string word;                            // СЃС‚СЂРѕРєР° СЃ С‚РµРєСѓС‰РёРј СЃР»РѕРІРѕРј
+	auto input = 0;                         // С‚РµРєСѓС‰РёР№ РІРІРµРґС‘РЅРЅС‹Р№ СЃРёРјРІРѕР»
 
-	while ((input = _getch()) != KEY_ESC) { // считать символ пока не esc
-		if (input == KEY_TAB) {             // если TAB, то пытаемся завершить слово
-			string const completeWord = tree.autoComplete(word); // ищем слово в словаре, имея только начальную часть слова
-			if (!completeWord.empty()) {    // если нашли
-				word = completeWord;        // то текущим словом становится дополненное слово
+	while ((input = _getch()) != KEY_ESC) { // СЃС‡РёС‚Р°С‚СЊ СЃРёРјРІРѕР» РїРѕРєР° РЅРµ esc
+		if (input == KEY_TAB) {             // РµСЃР»Рё TAB, С‚Рѕ РїС‹С‚Р°РµРјСЃСЏ Р·Р°РІРµСЂС€РёС‚СЊ СЃР»РѕРІРѕ
+			string const completeWord = tree.autoComplete(word); // РёС‰РµРј СЃР»РѕРІРѕ РІ СЃР»РѕРІР°СЂРµ, РёРјРµСЏ С‚РѕР»СЊРєРѕ РЅР°С‡Р°Р»СЊРЅСѓСЋ С‡Р°СЃС‚СЊ СЃР»РѕРІР°
+			if (!completeWord.empty()) {    // РµСЃР»Рё РЅР°С€Р»Рё
+				word = completeWord;        // С‚Рѕ С‚РµРєСѓС‰РёРј СЃР»РѕРІРѕРј СЃС‚Р°РЅРѕРІРёС‚СЃСЏ РґРѕРїРѕР»РЅРµРЅРЅРѕРµ СЃР»РѕРІРѕ
 				cout << "\33[2K";
 				cout << "\r" << word;
 			}
 		}
-		else if (input == KEY_ENTER) {     // если ENTER, переходим к вводу нового слова
-			tree.insert(word);             // сохраняем введённое словов словаре
+		else if (input == KEY_ENTER) {     // РµСЃР»Рё ENTER, РїРµСЂРµС…РѕРґРёРј Рє РІРІРѕРґСѓ РЅРѕРІРѕРіРѕ СЃР»РѕРІР°
+			tree.insert(word);             // СЃРѕС…СЂР°РЅСЏРµРј РІРІРµРґС‘РЅРЅРѕРµ СЃР»РѕРІРѕРІ СЃР»РѕРІР°СЂРµ
 			word.clear();
 			cout << endl;
 		}
-		else {                            // введён любой другой символ
-			if (input == KEY_BACK) {      // если BACKSPACE, стираем один символ
+		else {                            // РІРІРµРґС‘РЅ Р»СЋР±РѕР№ РґСЂСѓРіРѕР№ СЃРёРјРІРѕР»
+			if (input == KEY_BACK) {      // РµСЃР»Рё BACKSPACE, СЃС‚РёСЂР°РµРј РѕРґРёРЅ СЃРёРјРІРѕР»
 				if (!word.empty()) {
 					word.resize(word.size() - 1);
 				}
 			}
-			else {                        // любой другой символ добавляем в конец слова
+			else {                        // Р»СЋР±РѕР№ РґСЂСѓРіРѕР№ СЃРёРјРІРѕР» РґРѕР±Р°РІР»СЏРµРј РІ РєРѕРЅРµС† СЃР»РѕРІР°
 				word.push_back(input);
 			}
-			cout << "\33[2K";             // очистить строку
-			cout << "\r" << word;         // вывести слово заново. Теперь уже с доп. символом
+			cout << "\33[2K";             // РѕС‡РёСЃС‚РёС‚СЊ СЃС‚СЂРѕРєСѓ
+			cout << "\r" << word;         // РІС‹РІРµСЃС‚Рё СЃР»РѕРІРѕ Р·Р°РЅРѕРІРѕ. РўРµРїРµСЂСЊ СѓР¶Рµ СЃ РґРѕРї. СЃРёРјРІРѕР»РѕРј
 		}
 	}
 	return 0;
